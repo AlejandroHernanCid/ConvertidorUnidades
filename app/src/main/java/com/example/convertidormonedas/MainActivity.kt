@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnConvertir: Button
     private lateinit var tvResultado: TextView
 
-    private val opciones = listOf("Km", "Millas")
+    private val opciones = listOf("Km", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas",
+        "Kilogramos", "Libras", "Gramos", "Onzas",
+        "Celsius", "Fahrenheit", "Kelvin")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,16 +68,71 @@ class MainActivity : AppCompatActivity() {
 
             unidadEntrada == unidadSalida -> valor
 
-            unidadEntrada == "Km" && unidadSalida == "Millas" -> valor * 0.621371
+            // ----- LONGITUD -----
+            unidadEntrada == "Km" && unidadSalida == "Millas" -> valor * 0.621373
+            unidadEntrada == "Km" && unidadSalida == "Metros" -> valor * 1000.0
+            unidadEntrada == "Km" && unidadSalida == "Pies" -> valor * 3280.84
+            unidadEntrada == "Km" && unidadSalida == "Yardas" -> valor * 1093.61
+            unidadEntrada == "Km" && unidadSalida == "Centímetros" -> valor * 100000.0
+            unidadEntrada == "Km" && unidadSalida == "Pulgadas" -> valor * 39370.08
 
-            unidadEntrada == "Millas" && unidadSalida == "Km" -> valor / 0.621371
+            unidadEntrada == "Millas" && unidadSalida == "Kilómetros" -> valor * 1.60934
+            unidadEntrada == "Millas" && unidadSalida == "Metros" -> valor * 1609.34
+            unidadEntrada == "Millas" && unidadSalida == "Pies" -> valor * 5280.0
+            unidadEntrada == "Millas" && unidadSalida == "Yardas" -> valor * 1760.0
+            unidadEntrada == "Millas" && unidadSalida == "Centímetros" -> valor * 160934.0
+            unidadEntrada == "Millas" && unidadSalida == "Pulgadas" -> valor * 63360.0
 
+            unidadEntrada == "Metros" && unidadSalida == "Kilómetros" -> valor / 1000.0
+            unidadEntrada == "Metros" && unidadSalida == "Millas" -> valor / 1609.34
+            unidadEntrada == "Metros" && unidadSalida == "Pies" -> valor * 3.28084
+            unidadEntrada == "Metros" && unidadSalida == "Yardas" -> valor * 1.09361
+            unidadEntrada == "Metros" && unidadSalida == "Centímetros" -> valor * 100.0
+            unidadEntrada == "Metros" && unidadSalida == "Pulgadas" -> valor * 39.3701
+
+            unidadEntrada == "Pies" && unidadSalida == "Metros" -> valor * 0.3048
+            unidadEntrada == "Pies" && unidadSalida == "Kilómetros" -> valor * 0.0003048
+            unidadEntrada == "Pies" && unidadSalida == "Millas" -> valor / 5280.0
+            unidadEntrada == "Pies" && unidadSalida == "Yardas" -> valor / 3.0
+            unidadEntrada == "Pies" && unidadSalida == "Centímetros" -> valor * 30.48
+            unidadEntrada == "Pies" && unidadSalida == "Pulgadas" -> valor * 12.0
+
+            unidadEntrada == "Yardas" && unidadSalida == "Metros" -> valor * 0.9144
+            unidadEntrada == "Centímetros" && unidadSalida == "Metros" -> valor / 100.0
+            unidadEntrada == "Pulgadas" && unidadSalida == "Centímetros" -> valor * 2.54
+
+            unidadEntrada == "Centímetros" && unidadSalida == "Pulgadas" -> valor / 2.54
+            unidadEntrada == "Pulgadas" && unidadSalida == "Metros" -> valor * 0.0254
+
+            // ----- PESO -----
+            unidadEntrada == "Kilogramos" && unidadSalida == "Libras" -> valor * 2.20462
+            unidadEntrada == "Kilogramos" && unidadSalida == "Gramos" -> valor * 1000.0
+            unidadEntrada == "Kilogramos" && unidadSalida == "Onzas" -> valor * 35.274
+
+            unidadEntrada == "Libras" && unidadSalida == "Kilogramos" -> valor * 0.453592
+            unidadEntrada == "Libras" && unidadSalida == "Gramos" -> valor * 453.592
+            unidadEntrada == "Libras" && unidadSalida == "Onzas" -> valor * 16.0
+
+            unidadEntrada == "Gramos" && unidadSalida == "Kilogramos" -> valor / 1000.0
+            unidadEntrada == "Gramos" && unidadSalida == "Libras" -> valor / 453.592
+            unidadEntrada == "Gramos" && unidadSalida == "Onzas" -> valor * 0.035274
+
+            unidadEntrada == "Onzas" && unidadSalida == "Gramos" -> valor / 0.035274
+            unidadEntrada == "Onzas" && unidadSalida == "Kilogramos" -> valor / 35.274
+
+            // ----- TEMPERATURA -----
+            unidadEntrada == "Celsius" && unidadSalida == "Fahrenheit" -> valor * 9 / 5 + 32
+            unidadEntrada == "Fahrenheit" && unidadSalida == "Celsius" -> (valor - 32) * 5 / 9
+            unidadEntrada == "Celsius" && unidadSalida == "Kelvin" -> valor + 273.15
+            unidadEntrada == "Kelvin" && unidadSalida == "Celsius" -> valor - 273.15
+            unidadEntrada == "Fahrenheit" && unidadSalida == "Kelvin" -> (valor - 32) * 5 / 9 + 273.15
+            unidadEntrada == "Kelvin" && unidadSalida == "Fahrenheit" -> (valor - 273.15) * 9 / 5 + 32
 
             else -> {
                 Toast.makeText(this, "Conversión no soportada", Toast.LENGTH_SHORT).show()
                 return
             }
         }
-            tvResultado.text = "Resultado: %.2f".format(resultado)
+        tvResultado.text = "$valor $unidadEntrada = ${"%.2f".format(resultado)} $unidadSalida"
     }
 }

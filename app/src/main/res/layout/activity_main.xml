@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:padding="24dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#A09797">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Que quieres convertir?"
+        android:textColor="@color/Gray"
         android:paddingBottom="40dp"/>
 
     <EditText
@@ -20,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce un valor"
+        android:textColor="@color/Gray"
+        android:textColorHint="@color/Gray"
         android:inputType="numberDecimal"
         android:minHeight="48dp" />
 
@@ -28,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"/>
 
     <Spinner
         android:id="@+id/spinnerFrom"
@@ -37,13 +41,14 @@
         android:layout_marginTop="16dp"
         android:minHeight="48dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnConvertir"
-        android:text="Convertir"
+        style="@style/resultado_boton_convertir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/resultado_boton_convertir"/>
+        android:text="Convertir" />
+
+
 
     <TextView
         android:id="@+id/tvResultado"
