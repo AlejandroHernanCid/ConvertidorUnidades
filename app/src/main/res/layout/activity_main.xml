@@ -14,31 +14,36 @@
         android:layout_height="wrap_content"
         android:text="Que quieres convertir?"
         android:paddingBottom="40dp"/>
+
     <EditText
         android:id="@+id/inputValor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Introduce un valor"
         android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:minHeight="48dp" />
 
     <Spinner
         android:id="@+id/spinnerTo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp" />
 
     <Spinner
         android:id="@+id/spinnerFrom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/btnConvertir"
         android:text="Convertir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        style="@style/resultado_boton_convertir"/>
 
     <TextView
         android:id="@+id/tvResultado"
