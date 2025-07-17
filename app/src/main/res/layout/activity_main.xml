@@ -5,7 +5,7 @@
     android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A09797">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -14,19 +14,22 @@
         android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Que quieres convertir?"
-        android:textColor="@color/Gray"
-        android:paddingBottom="40dp"/>
+        android:text="CONVERSOR DE UNIDADES"
+        android:textColor="@color/black_dark"
+        android:fontFamily="@font/amaranth_bold"
+        android:paddingBottom="40dp"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/inputValor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce un valor"
-        android:textColor="@color/Gray"
-        android:textColorHint="@color/Gray"
+        android:textColor="@color/black_dark"
+        android:textColorHint="@color/black_dark"
         android:inputType="numberDecimal"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:fontFamily="@font/amaranth_bold"/>
 
     <Spinner
         android:id="@+id/spinnerTipo"
@@ -54,7 +57,8 @@
         style="@style/resultado_boton_convertir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Convertir" />
+        android:text="Convertir"
+        android:fontFamily="@font/amaranth_bold"/>
 
 
 
@@ -73,7 +77,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingEnd="8dp"
-            android:text="Resultado aquí" />
+            android:text="Resultado aquí"
+            android:fontFamily="@font/amaranth_bold"
+            android:textColor="@color/black_dark"
+            android:textColorHint="@color/black_dark"/>
 
         <ImageButton
             android:id="@+id/btnCopiar"
@@ -81,7 +88,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_copy"
             android:contentDescription="Copiar resultado"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            android:background="?attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
 
 
@@ -95,7 +102,9 @@
         android:text="Historial de conversiones: "
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/amaranth_bold"
+        android:textColor="@color/black_dark"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -113,7 +122,9 @@
             android:minHeight="48dp"
             android:singleLine="false"
             android:text=""
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/amaranth_bold"
+            android:textColor="@color/black_dark"/>
 
     </ScrollView>
 
@@ -124,7 +135,8 @@
         android:layout_marginTop="8dp"
         android:minHeight="48dp"
         android:text="Borrar historial"
-        style="@style/resultado_boton_convertir"/>
+        style="@style/resultado_boton_convertir"
+        android:fontFamily="@font/amaranth_bold"/>
 
 
 </LinearLayout>
