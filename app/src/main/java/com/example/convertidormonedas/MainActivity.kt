@@ -1,6 +1,8 @@
 package com.example.convertidormonedas
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -16,14 +18,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputValor: EditText
     private lateinit var spinnerTo: Spinner
     private lateinit var spinnerFrom: Spinner
+    private lateinit var spinnerTipo: Spinner
     private lateinit var btnConvertir: Button
     private lateinit var tvResultado: TextView
     private lateinit var tvListaHistorial: TextView
     private lateinit var btnBorrarHistorial: Button
     private val historial = mutableListOf<String>()
-    private val opciones = listOf("Kilómetros", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas",
-        "Kilogramos", "Libras", "Gramos", "Onzas",
-        "Celsius", "Fahrenheit", "Kelvin")
+    private val unidadesPorTipo = mapOf(
+        "Longitud" to listOf("Kilómetros", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas"),
+        "Peso" to listOf("Kilogramos", "Libras", "Gramos", "Onzas"),
+        "Temperatura" to listOf("Celsius", "Fahrenheit", "Kelvin")
+    )
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,17 +45,37 @@ class MainActivity : AppCompatActivity() {
         tvResultado = findViewById<TextView>(R.id.tvResultado)
         tvListaHistorial = findViewById<TextView>(R.id.tvListaHistorial)
         btnBorrarHistorial = findViewById<Button>(R.id.btnBorrarHistorial)
+        spinnerTipo = findViewById<Spinner>(R.id.spinnerTipo)
 
-        //Creamos un adaptador para asignar el contenido del array de opciones a los spinners
-        val adapterTo = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
-        adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTo.adapter = adapterTo
+        //adapter para tipos
+        val tipos = unidadesPorTipo.keys.toList()
+        val adapterTipo = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipos)
+        adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTipo.adapter = adapterTipo
 
-        val adapterFrom = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
-        adapterFrom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerFrom.adapter = adapterFrom
+        //Al actualizar tipos, los dos spinners se actualizan con las siguientes unidades
 
-        //Boton de convertir con la funcion de convertir
+        spinnerTipo.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val tipoSeleccionado = tipos[position]
+                val unidades = unidadesPorTipo[tipoSeleccionado] ?: emptyList()
+
+                val adapterUnidades = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, unidades)
+                adapterUnidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerFrom.adapter = adapterUnidades
+                spinnerTo.adapter = adapterUnidades
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+
+
+            //Boton de convertir con la funcion de convertir
 
         btnConvertir.setOnClickListener {
             convertir()
