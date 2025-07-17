@@ -58,4 +58,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ResultadoBordeNaranja"/>
+
+    <!--Historial-->
+    <TextView
+        android:id="@+id/tvHistorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Historial de conversiones: "
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:background="#EEEEEE"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvListaHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="100"
+            android:minHeight="48dp"
+            android:singleLine="false"
+            android:text=""
+            android:textSize="14sp" />
+
+    </ScrollView>
+
 </LinearLayout>

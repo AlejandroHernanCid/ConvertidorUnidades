@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spinnerFrom: Spinner
     private lateinit var btnConvertir: Button
     private lateinit var tvResultado: TextView
-
-    private val opciones = listOf("Km", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas",
+    private lateinit var tvListaHistorial: TextView
+    private val historial = mutableListOf<String>()
+    private val opciones = listOf("Kilómetros", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas",
         "Kilogramos", "Libras", "Gramos", "Onzas",
         "Celsius", "Fahrenheit", "Kelvin")
 
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         spinnerFrom = findViewById<Spinner>(R.id.spinnerFrom)
         btnConvertir = findViewById<Button>(R.id.btnConvertir)
         tvResultado = findViewById<TextView>(R.id.tvResultado)
+        tvListaHistorial = findViewById<TextView>(R.id.tvListaHistorial)
 
         //Creamos un adaptador para asignar el contenido del array de opciones a los spinners
         val adapterTo = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
         btnConvertir.setOnClickListener {
             convertir()
         }
+
+
 
     }
     private fun convertir(){
@@ -69,12 +73,12 @@ class MainActivity : AppCompatActivity() {
             unidadEntrada == unidadSalida -> valor
 
             // ----- LONGITUD -----
-            unidadEntrada == "Km" && unidadSalida == "Millas" -> valor * 0.621373
-            unidadEntrada == "Km" && unidadSalida == "Metros" -> valor * 1000.0
-            unidadEntrada == "Km" && unidadSalida == "Pies" -> valor * 3280.84
-            unidadEntrada == "Km" && unidadSalida == "Yardas" -> valor * 1093.61
-            unidadEntrada == "Km" && unidadSalida == "Centímetros" -> valor * 100000.0
-            unidadEntrada == "Km" && unidadSalida == "Pulgadas" -> valor * 39370.08
+            unidadEntrada == "Kilómetros" && unidadSalida == "Millas" -> valor * 0.621373
+            unidadEntrada == "Kilómetros" && unidadSalida == "Metros" -> valor * 1000.0
+            unidadEntrada == "Kilómetros" && unidadSalida == "Pies" -> valor * 3280.84
+            unidadEntrada == "Kilómetros" && unidadSalida == "Yardas" -> valor * 1093.61
+            unidadEntrada == "Kilómetros" && unidadSalida == "Centímetros" -> valor * 100000.0
+            unidadEntrada == "Kilómetros" && unidadSalida == "Pulgadas" -> valor * 39370.08
 
             unidadEntrada == "Millas" && unidadSalida == "Kilómetros" -> valor * 1.60934
             unidadEntrada == "Millas" && unidadSalida == "Metros" -> valor * 1609.34
@@ -133,6 +137,16 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
-        tvResultado.text = "$valor $unidadEntrada = ${"%.2f".format(resultado)} $unidadSalida"
+        tvResultado.text = "$valor $unidadEntrada -> ${"%.2f".format(resultado)} $unidadSalida"
+
+        //Añadimos al historial el resultado
+        historial.add(0, tvResultado.text.toString())
+        //Actualizamos el TextView
+        val historialTexto = historial.joinToString(separator = "\n")
+        tvListaHistorial.text = historialTexto
+        //Condicion para limitar historial a 10
+        if (historial.size > 10) historial.removeAt(historial.lastIndex)
+
     }
+
 }
