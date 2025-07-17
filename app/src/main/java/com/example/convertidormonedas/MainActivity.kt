@@ -1,11 +1,16 @@
 package com.example.convertidormonedas
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    @SuppressLint("ServiceCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -74,8 +80,24 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         })
 
+        //Boton copiar
 
-            //Boton de convertir con la funcion de convertir
+        val btnCopiar = findViewById<ImageButton>(R.id.btnCopiar)
+        val tvResultado = findViewById<TextView>(R.id.tvResultado)
+
+        btnCopiar.setOnClickListener {
+            val texto = tvResultado.text.toString()
+            if (texto.isNotEmpty()) {
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("resultado", texto)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(this, "Resultado copiado", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
+        //Boton de convertir con la funcion de convertir
 
         btnConvertir.setOnClickListener {
             convertir()
