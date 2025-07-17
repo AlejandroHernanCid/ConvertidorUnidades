@@ -89,4 +89,14 @@
 
     </ScrollView>
 
+    <Button
+        android:id="@+id/btnBorrarHistorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:text="Borrar historial"
+        style="@style/resultado_boton_convertir"/>
+
+
 </LinearLayout>

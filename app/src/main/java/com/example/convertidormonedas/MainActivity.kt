@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnConvertir: Button
     private lateinit var tvResultado: TextView
     private lateinit var tvListaHistorial: TextView
+    private lateinit var btnBorrarHistorial: Button
     private val historial = mutableListOf<String>()
     private val opciones = listOf("Kilómetros", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas",
         "Kilogramos", "Libras", "Gramos", "Onzas",
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         btnConvertir = findViewById<Button>(R.id.btnConvertir)
         tvResultado = findViewById<TextView>(R.id.tvResultado)
         tvListaHistorial = findViewById<TextView>(R.id.tvListaHistorial)
+        btnBorrarHistorial = findViewById<Button>(R.id.btnBorrarHistorial)
 
         //Creamos un adaptador para asignar el contenido del array de opciones a los spinners
         val adapterTo = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
@@ -51,6 +53,11 @@ class MainActivity : AppCompatActivity() {
 
         btnConvertir.setOnClickListener {
             convertir()
+        }
+
+        btnBorrarHistorial.setOnClickListener {
+            historial.clear()
+            tvListaHistorial.text = ""
         }
 
 
