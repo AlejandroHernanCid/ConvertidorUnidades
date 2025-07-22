@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">ConvertidorMonedas</string>
+    <string name="app_name">ConvertidorUnidades</string>
+    <string name="title">CONVERSOR DE UNIDADES</string>
+    <string name="title_historial">Historial de conversiones: </string>
+    <string name="boton_convertir">Convertir</string>
+    <string name="boton_borrar_historial">Borrar historial</string>
+    <string name="hint_resultado">Resultado aquí</string>
+    <string name="hint_input_valor">Introduce un valor</string>
 </resources>

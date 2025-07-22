@@ -1,142 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CONVERSOR DE UNIDADES"
-        android:textColor="@color/black_dark"
-        android:fontFamily="@font/amaranth_bold"
-        android:paddingBottom="40dp"
-        android:gravity="center"/>
-
-    <EditText
-        android:id="@+id/inputValor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Introduce un valor"
-        android:textColor="@color/black_dark"
-        android:textColorHint="@color/black_dark"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp"
-        android:fontFamily="@font/amaranth_bold"/>
-
-    <Spinner
-        android:id="@+id/spinnerTipo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" />
-
-
-    <Spinner
-        android:id="@+id/spinnerTo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:minHeight="48dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerFrom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:minHeight="48dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnConvertir"
-        style="@style/resultado_boton_convertir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Convertir"
-        android:fontFamily="@font/amaranth_bold"/>
-
-
+    android:background="@color/white"
+    android:padding="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="24dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvResultado"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18sp"
+            android:id="@+id/tvTitle"
+            android:textSize="30sp"
             android:textStyle="bold"
-            android:paddingEnd="8dp"
-            android:text="Resultado aquí"
-            android:fontFamily="@font/amaranth_bold"
-            android:textColor="@color/black_dark"
-            android:textColorHint="@color/black_dark"/>
-
-        <ImageButton
-            android:id="@+id/btnCopiar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_copy"
-            android:contentDescription="Copiar resultado"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-    </LinearLayout>
-
-
-
-
-    <!--Historial-->
-    <TextView
-        android:id="@+id/tvHistorial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Historial de conversiones: "
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/amaranth_bold"
-        android:textColor="@color/black_dark"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        android:background="#EEEEEE"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/tvListaHistorial"
+            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:maxLines="100"
+            android:text="@string/title"
+            android:textColor="@color/black_dark"
+            android:fontFamily="@font/amaranth_bold"
+            android:paddingBottom="40dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/inputValor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_input_valor"
+            android:textColor="@color/black_dark"
+            android:textColorHint="@color/black_dark"
+            android:inputType="numberDecimal"
             android:minHeight="48dp"
-            android:singleLine="false"
-            android:text=""
-            android:textSize="14sp"
+            android:fontFamily="@font/amaranth_bold"/>
+
+        <Spinner
+            android:id="@+id/spinnerTipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConvertir"
+            style="@style/resultado_boton_convertir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/boton_convertir"
+            android:fontFamily="@font/amaranth_bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvResultado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingEnd="8dp"
+                android:hint="@string/hint_resultado"
+                android:fontFamily="@font/amaranth_bold"
+                android:textColor="@color/black_dark"
+                android:textColorHint="@color/black_dark"/>
+
+            <ImageButton
+                android:id="@+id/btnCopiar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_copy"
+                android:contentDescription="Copiar resultado"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+        </LinearLayout>
+
+        <!--Historial-->
+        <TextView
+            android:id="@+id/tvHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_historial"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/amaranth_bold"
             android:textColor="@color/black_dark"/>
 
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="#EEEEEE"
+            android:padding="8dp">
 
-    <Button
-        android:id="@+id/btnBorrarHistorial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:minHeight="48dp"
-        android:text="Borrar historial"
-        style="@style/resultado_boton_convertir"
-        android:fontFamily="@font/amaranth_bold"/>
+            <TextView
+                android:id="@+id/tvListaHistorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:maxLines="100"
+                android:minHeight="48dp"
+                android:singleLine="false"
+                android:text=""
+                android:textSize="14sp"
+                android:fontFamily="@font/amaranth_bold"
+                android:textColor="@color/black_dark"/>
+        </ScrollView>
 
+        <Button
+            android:id="@+id/btnBorrarHistorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:text="@string/boton_borrar_historial"
+            style="@style/resultado_boton_convertir"
+            android:fontFamily="@font/amaranth_bold"/>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
