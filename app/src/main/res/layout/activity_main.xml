@@ -24,16 +24,30 @@
             android:paddingBottom="40dp"
             android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/inputValor"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_input_valor"
-            android:textColor="@color/black_dark"
-            android:textColorHint="@color/black_dark"
-            android:inputType="numberDecimal"
-            android:minHeight="48dp"
-            android:fontFamily="@font/amaranth_bold"/>
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/inputValor"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_input_valor"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:fontFamily="@font/amaranth_bold"/>
+
+            <ImageButton
+                android:id="@+id/btnVoice"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_mic"
+                android:contentDescription="Hablar"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+
 
         <Spinner
             android:id="@+id/spinnerTipo"

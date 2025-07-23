@@ -1,10 +1,13 @@
 package com.example.convertidormonedas
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -23,6 +26,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -116,8 +120,36 @@ class MainActivity : AppCompatActivity() {
 
         initAds()
 
+        findViewById<ImageButton>(R.id.btnVoice).setOnClickListener {
+            iniciarReconocimientoVoz()
+        }
+
+
 
     }
+
+    private fun iniciarReconocimientoVoz() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+
+        try {
+            startActivityForResult(intent, 100)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, "Tu dispositivo no admite entrada por voz", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            val resultado = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val textoReconocido = resultado?.get(0) ?: ""
+            findViewById<EditText>(R.id.inputValor).setText(textoReconocido)
+        }
+    }
+
     private fun initAds(){
         MobileAds.initialize(this){}
 
