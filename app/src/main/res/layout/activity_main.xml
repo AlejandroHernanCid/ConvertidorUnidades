@@ -135,5 +135,19 @@
             style="@style/resultado_boton_convertir"
             android:fontFamily="@font/amaranth_bold"/>
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            android:layout_gravity="center"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"/>
+
+
+
+
     </LinearLayout>
+
+
 </ScrollView>
