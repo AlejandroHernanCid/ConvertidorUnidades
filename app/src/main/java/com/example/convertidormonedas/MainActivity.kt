@@ -14,19 +14,17 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import java.util.Locale
+import okhttp3.*
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -125,8 +123,22 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        val sinAnuncios = findViewById<TextView>(R.id.sinAnuncios)
+
+        sinAnuncios.setOnClickListener {
+            val intent = Intent(this, PaymentActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+
+
+
+
 
     }
+
 
     private fun iniciarReconocimientoVoz() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)

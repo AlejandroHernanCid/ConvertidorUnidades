@@ -6,4 +6,9 @@
     <string name="boton_borrar_historial">Borrar historial</string>
     <string name="hint_resultado">Resultado aquí</string>
     <string name="hint_input_valor">Introduce un valor</string>
+
+    <string name="premium">Tocar para quitar anuncios</string>
+    <string name="premiumTitle">Obtén acceso premium</string>
+    <string name="premiumBenefit1">Sin anuncios</string>
+    <string name="pay">Paga solo 1€ hoy!!</string>
 </resources>
