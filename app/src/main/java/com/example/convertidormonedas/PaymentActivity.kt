@@ -1,7 +1,10 @@
 package com.example.convertidormonedas
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -103,18 +106,32 @@ class PaymentActivity : AppCompatActivity() {
     private fun onPaymentSheetResult(paymentResult: PaymentSheetResult) {
         when (paymentResult) {
             is PaymentSheetResult.Completed -> {
-                Toast.makeText(this, "Pago completado!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Pago completado! Ahora tienes plan Premium ✨", Toast.LENGTH_LONG).show()
+                becamePremium()
             }
             is PaymentSheetResult.Canceled -> {
-                Toast.makeText(this, "Pago cancelado", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "Pago cancelado", Toast.LENGTH_LONG).show()
             }
             is PaymentSheetResult.Failed -> {
-                Toast.makeText(
+                /*Toast.makeText(
                     this,
                     "Error en pago: ${paymentResult.error.localizedMessage}",
                     Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
             }
         }
+    }
+
+    private fun becamePremium(){
+       var sharedPreferences: SharedPreferences
+       sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+        var editor = sharedPreferences.edit()
+        editor.apply {
+            putBoolean("PREMIUM", true)
+        }.apply()
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

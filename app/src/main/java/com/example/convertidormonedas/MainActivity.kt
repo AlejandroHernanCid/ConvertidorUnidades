@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
@@ -14,6 +15,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -37,6 +40,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvListaHistorial: TextView
     private lateinit var btnBorrarHistorial: Button
     private val historial = mutableListOf<String>()
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+    private var premium: Boolean = false
     private val unidadesPorTipo = mapOf(
         "Longitud" to listOf("Kilómetros", "Millas", "Metros", "Pies", "Yardas", "Centímetros", "Pulgadas"),
         "Peso" to listOf("Kilogramos", "Libras", "Gramos", "Onzas"),
@@ -47,97 +53,123 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("ServiceCast")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+            super.onCreate(savedInstanceState)
+            enableEdgeToEdge()
+            setContentView(R.layout.activity_main)
 
-        //Inicializamos las variable asignando los ids del xml
-        inputValor = findViewById<EditText>(R.id.inputValor)
-        spinnerTo = findViewById<Spinner>(R.id.spinnerTo)
-        spinnerFrom = findViewById<Spinner>(R.id.spinnerFrom)
-        btnConvertir = findViewById<Button>(R.id.btnConvertir)
-        tvResultado = findViewById<TextView>(R.id.tvResultado)
-        tvListaHistorial = findViewById<TextView>(R.id.tvListaHistorial)
-        btnBorrarHistorial = findViewById<Button>(R.id.btnBorrarHistorial)
-        spinnerTipo = findViewById<Spinner>(R.id.spinnerTipo)
+            //Inicializamos las variable asignando los ids del xml
+            inputValor = findViewById<EditText>(R.id.inputValor)
+            spinnerTo = findViewById<Spinner>(R.id.spinnerTo)
+            spinnerFrom = findViewById<Spinner>(R.id.spinnerFrom)
+            btnConvertir = findViewById<Button>(R.id.btnConvertir)
+            tvResultado = findViewById<TextView>(R.id.tvResultado)
+            tvListaHistorial = findViewById<TextView>(R.id.tvListaHistorial)
+            btnBorrarHistorial = findViewById<Button>(R.id.btnBorrarHistorial)
+            spinnerTipo = findViewById<Spinner>(R.id.spinnerTipo)
 
-        //adapter para tipos
-        val tipos = unidadesPorTipo.keys.toList()
-        val adapterTipo = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipos)
-        adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTipo.adapter = adapterTipo
+            //adapter para tipos
+            val tipos = unidadesPorTipo.keys.toList()
+            val adapterTipo = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipos)
+            adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerTipo.adapter = adapterTipo
 
-        //Al actualizar tipos, los dos spinners se actualizan con las siguientes unidades
+            //Al actualizar tipos, los dos spinners se actualizan con las siguientes unidades
 
-        spinnerTipo.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val tipoSeleccionado = tipos[position]
-                val unidades = unidadesPorTipo[tipoSeleccionado] ?: emptyList()
+            spinnerTipo.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val tipoSeleccionado = tipos[position]
+                    val unidades = unidadesPorTipo[tipoSeleccionado] ?: emptyList()
 
-                val adapterUnidades = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, unidades)
-                adapterUnidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinnerFrom.adapter = adapterUnidades
-                spinnerTo.adapter = adapterUnidades
+                    val adapterUnidades = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, unidades)
+                    adapterUnidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerFrom.adapter = adapterUnidades
+                    spinnerTo.adapter = adapterUnidades
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            })
+
+            //Boton copiar
+
+            val btnCopiar = findViewById<ImageButton>(R.id.btnCopiar)
+            val tvResultado = findViewById<TextView>(R.id.tvResultado)
+
+            btnCopiar.setOnClickListener {
+                val texto = tvResultado.text.toString()
+                if (texto.isNotEmpty()) {
+                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText("resultado", texto)
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(this, "Resultado copiado", Toast.LENGTH_SHORT).show()
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        })
 
-        //Boton copiar
 
-        val btnCopiar = findViewById<ImageButton>(R.id.btnCopiar)
-        val tvResultado = findViewById<TextView>(R.id.tvResultado)
+            //Boton de convertir con la funcion de convertir
 
-        btnCopiar.setOnClickListener {
-            val texto = tvResultado.text.toString()
-            if (texto.isNotEmpty()) {
-                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("resultado", texto)
-                clipboard.setPrimaryClip(clip)
-                Toast.makeText(this, "Resultado copiado", Toast.LENGTH_SHORT).show()
+            btnConvertir.setOnClickListener {
+                convertir()
             }
-        }
 
+            btnBorrarHistorial.setOnClickListener {
+                historial.clear()
+                tvListaHistorial.text = ""
+            }
 
+            findViewById<ImageButton>(R.id.btnVoice).setOnClickListener {
+                iniciarReconocimientoVoz()
+            }
 
-        //Boton de convertir con la funcion de convertir
+            val sinAnuncios = findViewById<TextView>(R.id.sinAnuncios)
 
-        btnConvertir.setOnClickListener {
-            convertir()
-        }
+            sinAnuncios.setOnClickListener {
+                val intent = Intent(this, PaymentActivity::class.java)
+                startActivity(intent)
+            }
 
-        btnBorrarHistorial.setOnClickListener {
-            historial.clear()
-            tvListaHistorial.text = ""
-        }
-
-        initAds()
-
-        findViewById<ImageButton>(R.id.btnVoice).setOnClickListener {
-            iniciarReconocimientoVoz()
-        }
-
-
-        val sinAnuncios = findViewById<TextView>(R.id.sinAnuncios)
-
-        sinAnuncios.setOnClickListener {
-            val intent = Intent(this, PaymentActivity::class.java)
-            startActivity(intent)
-        }
-
-
-
-
-
-
-
+            initPreferences()
+            checkPremium()
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        checkPremium()
+    }
+
+    private fun initPreferences(){
+        sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+    }
+
+    private fun checkPremium() {
+        premium = sharedPreferences.getBoolean("PREMIUM", false)
+
+        val bannerSinAnuncios = findViewById<TextView>(R.id.sinAnuncios)
+        val adBanner = findViewById<AdView>(R.id.adView)
+
+        if (premium) {
+            // Usuario Premium: ocultamos anuncios, mostramos texto sin click
+            bannerSinAnuncios.text = "Actualmente tienes plan Premium ✨"
+            bannerSinAnuncios.isClickable = false
+            bannerSinAnuncios.isEnabled = false
+            adBanner.visibility = View.GONE
+        } else {
+            // Usuario NO Premium: mostramos anuncio y texto clicable para pagar
+            bannerSinAnuncios.text = "Toca para comprar plan Premium"
+            bannerSinAnuncios.isClickable = true
+            bannerSinAnuncios.isEnabled = true
+            adBanner.visibility = View.VISIBLE
+            initAds()
+        }
+    }
+
 
 
     private fun iniciarReconocimientoVoz() {
