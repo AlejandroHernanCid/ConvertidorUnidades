@@ -7,6 +7,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
@@ -56,8 +57,9 @@ class MainActivity : AppCompatActivity() {
             super.onCreate(savedInstanceState)
             enableEdgeToEdge()
             setContentView(R.layout.activity_main)
+             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-            //Inicializamos las variable asignando los ids del xml
+        //Inicializamos las variable asignando los ids del xml
             inputValor = findViewById<EditText>(R.id.inputValor)
             spinnerTo = findViewById<Spinner>(R.id.spinnerTo)
             spinnerFrom = findViewById<Spinner>(R.id.spinnerFrom)
